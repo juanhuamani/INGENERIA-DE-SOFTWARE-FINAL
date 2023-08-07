@@ -2,7 +2,6 @@ CREATE DATABASE database_events;
 
 USE database_events;
 
--- USERS TABLES --
 CREATE TABLE users(
     id INT(11) NOT NULL,
     username VARCHAR(16) NOT NULL,
@@ -14,10 +13,15 @@ ALTER TABLE users
     ADD PRIMARY KEY(id);
 
 ALTER TABLE users
-    MODIFY id INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT = 2;
+    MODIFY id INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT = 1;
+
+ALTER TABLE database_links.users 
+MODIFY username VARCHAR(30) NOT NULL;
+
+ALTER TABLE database_links.users 
+MODIFY password VARCHAR(120) NOT NULL;
 
 DESCRIBE users;
-
 
 -- LINKS TABLES --
 CREATE TABLE events(
@@ -32,8 +36,8 @@ CREATE TABLE events(
 
 ALTER TABLE events
     ADD PRIMARY KEY(id);
-
+    
 ALTER TABLE events
     MODIFY id INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT = 2;
-
+    
 DESCRIBE events;
