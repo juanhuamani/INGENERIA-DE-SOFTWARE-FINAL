@@ -1,4 +1,8 @@
 # Índice del Proyecto
+## Contribuidores
+ - Juan Diego Huamani Vilca
+ - Ricardo Alexander Rodriguez Pumacayo
+ - Aroni Jarata Antony
 
 ## Librerías
 ### [auth](src/lib/auth.js)
