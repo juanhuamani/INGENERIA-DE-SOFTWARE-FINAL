@@ -4,7 +4,7 @@
  - Ricardo Alexander Rodriguez Pumacayo
  - Aroni Jarata Antony
 
-##[auth](https://trello.com/b/lLkk7xVC/proyecto-ingeneria-de-software)
+## [Trello](https://trello.com/b/lLkk7xVC/proyecto-ingeneria-de-software)
 
 ## Librerías
 ### [auth](src/lib/auth.js)
