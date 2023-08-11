@@ -4,7 +4,6 @@ const exphbs = require('express-handlebars');
 const path = require('path');
 const flash = require('connect-flash');
 const session = require('express-session');
-const MYSQLStore = require('express-mysql-session');
 const passport = require('passport');
 
 const { database } = require('./keys');
@@ -49,6 +48,7 @@ app.use((req, res, next) => {
 // Routes
 app.use(require('./routes/index.js'));
 app.use(require('./routes/authentication'));
+app.use('/events',require('./routes/events'));
 
 // Public
 app.use(express.static(path.join(__dirname, 'public')));

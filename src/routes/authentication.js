@@ -1,60 +1,42 @@
 const express = require('express');
 const router = express.Router();
+
 const passport = require('passport');
-const { isLoggedIn } = require('../lib/auth');
+const { isLoggedIn, isNotLoggedIn } = require('../lib/auth');
 
-class AuthController {
-  signupForm(req, res) {
+router.get('/signup', isNotLoggedIn,(req, res)=>{
     res.render('auth/signup');
-  }
+});
 
-  async signup(req, res) {
-    // Lógica para el registro de usuarios
-    passport.authenticate('local.signup', {
-      successRedirect: '/profile',
-      failureRedirect: '/signup',
-      failureFlash: true,
-    })(req, res);
-  }
+router.post('/signup', isNotLoggedIn,passport.authenticate('local.signup',{
+    successRedirect: '/profile',
+    failureRedirect: '/signup',
+    failureFlash: true
+}))
 
-  signinForm(req, res) {
+router.get('/signin', isNotLoggedIn, (req, res) => {
     res.render('auth/signin');
-  }
+});
 
-  async signin(req, res) {
-    req.check('username', 'Username is Required').notEmpty();
-    req.check('password', 'Password is Required').notEmpty();
-    const errors = req.validationErrors();
-    if (errors.length > 0) {
-      req.flash('message', errors[0].msg);
-      res.redirect('/signin');
-    } else {
-      // Lógica para el inicio de sesión
-      passport.authenticate('local.signin', {
+router.post('/signin', isNotLoggedIn, (req, res, next) => {
+    passport.authenticate('local.signin', {
         successRedirect: '/profile',
         failureRedirect: '/signin',
-        failureFlash: true,
-      })(req, res);
-    }
-  }
+        failureFlash: true
+    })(req, res, next);
+});
 
-  logout(req, res) {
-    req.logOut();
-    res.redirect('/');
-  }
-
-  profile(req, res) {
+router.get('/profile', isLoggedIn, (req, res)=>{
     res.render('profile');
-  }
-}
+});
 
-const authController = new AuthController();
-
-router.get('/signup', authController.signupForm);
-router.post('/signup', authController.signup);
-router.get('/signin', authController.signinForm);
-router.post('/signin', authController.signin);
-router.get('/logout', authController.logout);
-router.get('/profile', isLoggedIn, authController.profile);
+router.get('/logout', isLoggedIn, (req, res, next) => {
+    req.logOut(function(err){
+        if(err){
+            return next(err);
+        }
+        res.redirect('/signin');
+    });    
+});
 
 module.exports = router;
