@@ -4,6 +4,8 @@
  - Ricardo Alexander Rodriguez Pumacayo
  - Aroni Jarata Antony
 
+##[auth](https://trello.com/b/lLkk7xVC/proyecto-ingeneria-de-software)
+
 ## Librerías
 ### [auth](src/lib/auth.js)
   - **Descripción:** El código exporta un objeto que contiene una función llamada isLoggedIn. Esta función se utiliza como middleware en una aplicación Node.js con Express y Passport.js para verificar si un usuario está autenticado antes de permitir el acceso a rutas protegidas. Si el usuario está autenticado, la función llama a next() para continuar con la ejecución de la siguiente función en la cadena de middleware. Si el usuario no está autenticado, redirige al usuario a la página de inicio de sesión.
