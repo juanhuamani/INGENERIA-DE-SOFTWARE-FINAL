@@ -3,9 +3,9 @@ const router = express.Router();
 const pool = require('../database');
 const { isLoggedIn } = require('../lib/auth');
 
-class LinkController {
+class eventController {
     async addLink(req, res) {
-        res.render('links/add');
+        res.render('events/add');
     }
 
     async saveLink(req, res) {
@@ -16,30 +16,30 @@ class LinkController {
             description,
             user_id: req.user.id,
         };
-        await pool.query('INSERT INTO links set ?', [newLink]);
-        req.flash('success', 'Link Saved Successfully');
-        res.redirect('/links');
+        await pool.query('INSERT INTO events set ?', [newLink]);
+        req.flash('success', 'Event Saved Successfully');
+        res.redirect('/events');
     }
 
-    async getLinks(req, res) {
-        const links = await pool.query('SELECT * FROM links WHERE user_id = ?', [
+    async getevents(req, res) {
+        const events = await pool.query('SELECT * FROM events WHERE user_id = ?', [
             req.user.id,
         ]);
-        res.render('links/list', { links });
+        res.render('events/list', { events });
     }
 
     async deleteLink(req, res) {
         const { id } = req.params;
-        await pool.query('DELETE FROM links WHERE ID = ?', [id]);
-        req.flash('success', 'Link Removed Successfully');
-        res.redirect('/links');
+        await pool.query('DELETE FROM events WHERE ID = ?', [id]);
+        req.flash('success', 'Event Removed Successfully');
+        res.redirect('/events');
     }
 
     async editLink(req, res) {
         const { id } = req.params;
-        const links = await pool.query('SELECT * FROM links WHERE id = ?', [id]);
-        console.log(links);
-        res.render('links/edit', { link: links[0] });
+        const events = await pool.query('SELECT * FROM events WHERE id = ?', [id]);
+        console.log(events);
+        res.render('events/edit', { link: events[0] });
     }
 
     async updateLink(req, res) {
@@ -50,19 +50,19 @@ class LinkController {
             description,
             url,
         };
-        await pool.query('UPDATE links set ? WHERE id = ?', [newLink, id]);
-        req.flash('success', 'Link Updated Successfully');
-        res.redirect('/links');
+        await pool.query('UPDATE events set ? WHERE id = ?', [newLink, id]);
+        req.flash('success', 'Event Updated Successfully');
+        res.redirect('/events');
     }
 }
 
-const linkController = new LinkController();
+const eventController = new eventController();
 
-router.get('/add', linkController.addLink);
-router.post('/add', linkController.saveLink);
-router.get('/', isLoggedIn, linkController.getLinks);
-router.get('/delete/:id', linkController.deleteLink);
-router.get('/edit/:id', linkController.editLink);
-router.post('/edit/:id', linkController.updateLink);
+router.get('/add', eventController.addLink);
+router.post('/add', eventController.saveLink);
+router.get('/', isLoggedIn, eventController.getevents);
+router.get('/delete/:id', eventController.deleteLink);
+router.get('/edit/:id', eventController.editLink);
+router.post('/edit/:id', eventController.updateLink);
 
 module.exports = router;
